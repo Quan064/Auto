@@ -25,7 +25,7 @@ def Setup_ChromeDriver():
     driver = uc.Chrome(driver_executable_path=path, options=chrome_options)
     driver.get("https://translate.google.com/?sl=auto&tl=vi&op=images")
 
-    driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div[2]/c-wiz/div[5]/c-wiz/div[2]/c-wiz/div/div/div/div[1]/div[2]/div[2]/div[1]/input').send_keys(r"C:\Users\Hello\OneDrive\Code Tutorial\Python\Auto\captured_region.png")
+    driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div[2]/c-wiz/div[5]/c-wiz/div[2]/c-wiz/div/div/div/div[1]/div[2]/div[2]/div[1]/input').send_keys(r"C:\Users\Hello\OneDrive\Code Tutorial\Python\Auto\Trans\captured_region.png")
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div[2]/c-wiz/div[5]/c-wiz/div[2]/c-wiz/div/div[1]/div[2]/div[2]/button'))).click()
     while True:
         if os.path.exists(PROCESSED_PATH): break
