@@ -1,8 +1,6 @@
-﻿#Requires AutoHotkey v2.0
+﻿#Requires AutoHotkey v2
 CoordMode "Mouse", "Screen"
 CoordMode "ToolTip", "Screen"
-
-::@gmail::minhquanthong064@gmail.com@gmail.com
 
 isEdgeAction := false
 
@@ -47,5 +45,31 @@ MButton Up::
     else
     {
         Send("{MButton up}")
+    }
+}
+
+RButton & WheelUp::
+{
+    Send("{Alt Down}{Tab}")
+    SetTimer(ReleaseAltTimer, 10)
+}
+
+RButton & WheelDown::
+{
+    Send("{Alt Down}{Shift Down}{Tab}{Shift Up}")
+    SetTimer(ReleaseAltTimer, 10)
+}
+
+ReleaseAltTimer() {
+    if (!GetKeyState("RButton", "P")) {
+        Send("{Alt Up}")
+        SetTimer(ReleaseAltTimer, 0)
+    }
+}
+
+~RButton::
+{
+    if (A_PriorHotkey = "RButton & WheelUp" || A_PriorHotkey = "RButton & WheelDown") {
+        return
     }
 }
