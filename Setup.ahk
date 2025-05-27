@@ -48,28 +48,29 @@ MButton Up::
     }
 }
 
-RButton & WheelUp::
+XButton2 & WheelUp::
 {
     Send("{Alt Down}{Tab}")
     SetTimer(ReleaseAltTimer, 10)
 }
 
-RButton & WheelDown::
+XButton2 & WheelDown::
 {
     Send("{Alt Down}{Shift Down}{Tab}{Shift Up}")
     SetTimer(ReleaseAltTimer, 10)
 }
 
 ReleaseAltTimer() {
-    if (!GetKeyState("RButton", "P")) {
+    if (!GetKeyState("XButton2", "P")) {
         Send("{Alt Up}")
         SetTimer(ReleaseAltTimer, 0)
     }
 }
 
-~RButton::
+XButton2::
 {
-    if (A_PriorHotkey = "RButton & WheelUp" || A_PriorHotkey = "RButton & WheelDown") {
+    if (A_PriorHotkey = "XButton2 & WheelUp" || A_PriorHotkey = "XButton2 & WheelDown") {
         return
     }
+    Send("{XButton2}")
 }
