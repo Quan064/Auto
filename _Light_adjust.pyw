@@ -67,7 +67,9 @@ brightness_label = tk.Label(root, text="50%", font=("Arial", 13), bg="#2f2f2f", 
 brightness_label.place(x=35, y=5)
 
 # Phím tắt
-subprocess.run(f'"{path}" c60', shell=True)
+with get_monitors()[0] as monitor:
+    monitor.set_luminance(60)
+    subprocess.run(f'"{path}" c60', shell=True)
 keyboard.add_hotkey("ctrl+f1", lambda: adjust_brightness(-10))
 keyboard.add_hotkey("ctrl+f2", lambda: adjust_brightness(+10))
 
