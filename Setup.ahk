@@ -66,11 +66,3 @@ ReleaseAltTimer() {
         SetTimer(ReleaseAltTimer, 0)
     }
 }
-
-XButton2::
-{
-    if (A_PriorHotkey = "XButton2 & WheelUp" || A_PriorHotkey = "XButton2 & WheelDown") {
-        return
-    }
-    Send("{XButton2}")
-}
