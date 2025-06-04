@@ -60,7 +60,16 @@ XButton2 & WheelDown::
     SetTimer(ReleaseAltTimer, 10)
 }
 
+global deleteSent := false
 ReleaseAltTimer() {
+    global deleteSent
+    if (GetKeyState("RButton", "P") && !deleteSent) {
+        Send("{Delete}")
+        deleteSent := true
+    }
+    if (!GetKeyState("RButton", "P") && deleteSent) {
+        deleteSent := false
+    }
     if (!GetKeyState("XButton2", "P")) {
         Send("{Alt Up}")
         SetTimer(ReleaseAltTimer, 0)
