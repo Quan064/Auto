@@ -78,3 +78,57 @@ ReleaseAltTimer() {
         SetTimer(ReleaseAltTimer, 0)
     }
 }
+
+#Esc:: ExitApp
+XButton2_pressed := false
+LButton::
+{
+    global XButton2_pressed
+    if (GetKeyState("XButton2", "P"))
+    {
+        XButton2_pressed := true
+        MouseGetPos &x
+        Loop
+        {
+            Sleep(10)
+            if !GetKeyState("XButton2", "P") {
+                Send('+ ')
+                break
+            }
+
+            MouseGetPos &xNow
+            deltaX := xNow - x
+
+            if Abs(deltaX) > 20
+            {
+                if deltaX > 0
+                {
+                    x := x + 20
+                    Send("#t")
+                }
+                else
+                {
+                    x := x - 20
+                    Send("#+t")
+                }
+            }
+        }
+    }
+    else
+    {
+        Send("{LButton down}")
+    }
+}
+
+LButton Up::
+{
+    global XButton2_pressed
+    if (XButton2_pressed)
+    {
+        XButton2_pressed := false
+    }
+    else
+    {
+        Send("{LButton up}")
+    }
+}
