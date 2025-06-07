@@ -86,6 +86,8 @@ LButton::
     global XButton2_pressed
     if (GetKeyState("XButton2", "P"))
     {
+        Send("#t")
+        Send("#+t")
         XButton2_pressed := true
         MouseGetPos &x
         Loop
