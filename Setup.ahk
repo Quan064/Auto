@@ -87,14 +87,19 @@ LButton::
     if (GetKeyState("XButton2", "P"))
     {
         Send("#t")
-        Send("#+t")
+        Send("{End}")
         XButton2_pressed := true
-        MouseGetPos &x
+        MouseGetPos &x, &y
         Loop
         {
             Sleep(10)
             if !GetKeyState("XButton2", "P") {
                 Send('+ ')
+                break
+            }
+            if GetKeyState("RButton", "P") {
+                Click 0, 0, 'L'
+                MouseMove x, y
                 break
             }
 
@@ -132,5 +137,23 @@ LButton Up::
     else
     {
         Send("{LButton up}")
+    }
+}
+
+RButton::
+{
+    global XButton2_pressed
+    if !XButton2_pressed
+    {
+        Send("{RButton down}")
+    }
+}
+
+RButton Up::
+{
+    global XButton2_pressed
+    if !XButton2_pressed
+    {
+        Send("{RButton up}")
     }
 }
