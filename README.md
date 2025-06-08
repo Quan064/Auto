@@ -1,21 +1,26 @@
 ﻿# Auto
 > [!NOTE]
-> Để chạy file mỗi khi khởi động máy:
-> - Tạo Shortcut của file
-> - Bấm **Window + R** nhập: *shell:startup*
-> - Đưa Shortcut vào folder Start-up
+> To run the file at startup:
+> - Create a Shortcut of the file
+> - Press **Windows + R**, then type: *shell:startup*
+> - Place the Shortcut into the Start-up folder
+
 ## Setup.exe
-- Thay **Alt + Tab** bằng **Nút tiến lên trên chuột + Lăn chuột** (chuột phải để xóa)
-- Bấm chuột giữa vào mép phải màn hình thì xóa lịch sử thông báo
-- **Nút tiến lên trên chuột + Chuột trái + Di chuyển trái phải** để mở thêm cửa sổ của app trên taskbar (chuột phải để hủy)
+- Replace **Alt + Tab** with **Forward mouse button + Scroll wheel** (right click to remove)
+- Middle-click on the right edge of the screen to clear notification history
+- **Forward mouse button + Left click + Move left or right** to open another window of an app on the taskbar (right click to cancel)
+
 ## Light_adjust.exe
-Điều chỉnh độ sáng màn hình bằng phím tắt:
-- **Ctrl + F1** : giảm độ sáng
-- **Ctrl + F2** : tăng độ sáng
+Adjust screen brightness using hotkeys:
+- **Ctrl + F1**: decrease brightness
+- **Ctrl + F2**: increase brightness
+
 > [!WARNING]
-> - Đảm bảo không xóa *build*, *ClickMonitorDDC_7_2.exe*; xóa *Light_adjust.pyw* được
-> - Chạy *ClickMonitorDDC_7_2.exe* mỗi khi khởi động máy
+> - Do not delete *build*, *ClickMonitorDDC_7_2.exe*; deleting *Light_adjust.pyw* is allowed
+> - Run *ClickMonitorDDC_7_2.exe* at every system startup
+
 ## pin.pyw
-Ghim hình ảnh trên màn hình
+Pin images on the screen
+
 ## trans.pyw
-Dịch màn hình
+Translate screen content
