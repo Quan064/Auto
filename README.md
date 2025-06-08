@@ -7,7 +7,7 @@
 ## Setup.exe
 - Thay **Alt + Tab** bằng **Nút tiến lên trên chuột + Lăn chuột** (chuột phải để xóa)
 - Bấm chuột giữa vào mép phải màn hình thì xóa lịch sử thông báo
-- **Nút tiến lên trên chuột + Chuột trái + Di chuyển trái phải** để mở thêm cửa sổ của app trên taskbar (chuột phải để xóa)
+- **Nút tiến lên trên chuột + Chuột trái + Di chuyển trái phải** để mở thêm cửa sổ của app trên taskbar (chuột phải để hủy)
 ## Light_adjust.exe
 Điều chỉnh độ sáng màn hình bằng phím tắt:
 - **Ctrl + F1** : giảm độ sáng
