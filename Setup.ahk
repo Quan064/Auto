@@ -11,7 +11,7 @@ MButton::
     isEdgeAction := x >= 1920 - 5
     if (isEdgeAction)
     {
-        Click 0, 0, 'L'
+        Click 1450, 1079, 'L'
         MouseMove x, y
         Sleep(300)
         Send("#n")
@@ -98,7 +98,7 @@ LButton::
                 break
             }
             if GetKeyState("RButton", "P") {
-                Click 0, 0, 'L'
+                Click 1450, 1079, 'L'
                 MouseMove x, y
                 break
             }
