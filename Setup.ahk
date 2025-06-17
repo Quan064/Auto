@@ -51,13 +51,13 @@ MButton Up::
     }
 }
 
-XButton2 & WheelUp::
+~XButton2 & WheelUp::
 {
     Send("{Alt Down}{Tab}")
     SetTimer(ReleaseAltTimer, 10)
 }
 
-XButton2 & WheelDown::
+~XButton2 & WheelDown::
 {
     Send("{Alt Down}{Shift Down}{Tab}{Shift Up}")
     SetTimer(ReleaseAltTimer, 10)
