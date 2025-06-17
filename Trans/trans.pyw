@@ -38,7 +38,7 @@ class ScreenCaptureApp(QMainWindow):
 
         # Chụp màn hình với vùng được chọn
         screenshot = ImageGrab.grab(bbox=(0, 0, 1920, 1080-32))
-        screenshot.save("captured_region.png")  # Lưu tạm vào file
+        screenshot.save(r"C:\Users\Hello\OneDrive\Code Tutorial\Python\Auto\Trans\captured_region.png")  # Lưu tạm vào file
 
         Setup_ChromeDriver()
 
