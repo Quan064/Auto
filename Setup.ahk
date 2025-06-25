@@ -65,21 +65,31 @@ MButton Up::
 
 global deleteSent := false
 ReleaseAltTimer() {
-    global deleteSent
-    if (GetKeyState("RButton", "P") && !deleteSent) {
-        Send("{Delete}")
-        deleteSent := true
-    }
-    if (!GetKeyState("RButton", "P") && deleteSent) {
-        deleteSent := false
-    }
+    global deleteSent   
     if (!GetKeyState("XButton2", "P")) {
         Send("{Alt Up}")
         SetTimer(ReleaseAltTimer, 0)
     }
+    MouseGetPos &x, &y
+    if (!deleteSent)
+    {
+        if (x >= 1920 - 5)
+        {
+            Send("{Delete}")
+            deleteSent := true
+        }
+        else if (x <= 5)
+        {
+            Send("{Escape}")
+            Send("{Alt Up}")
+            SetTimer(ReleaseAltTimer, 0)
+            deleteSent := true
+        }
+    }
+    else if ((x < 1920 - 5) && (x > 5))
+        deleteSent := false
 }
 
-#Esc:: ExitApp
 XButton2_pressed := false
 LButton::
 {
