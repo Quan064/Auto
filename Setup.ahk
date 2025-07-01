@@ -1,6 +1,7 @@
 ﻿#Requires AutoHotkey v2
 CoordMode "Mouse", "Screen"
 CoordMode "ToolTip", "Screen"
+#Esc:: ExitApp
 
 ^+4:: Run "C:\Users\Hello\OneDrive\Code Tutorial\Python\Auto\Pin\pin.pyw"
 ^+5:: Run "C:\Users\Hello\OneDrive\Code Tutorial\Python\Auto\Trans\trans.pyw"
@@ -54,13 +55,13 @@ MButton Up::
     }
 }
 
-~XButton2 & WheelUp::
+XButton2 & WheelUp::
 {
     Send("{Alt Down}{Tab}")
     SetTimer(ReleaseAltTimer, 10)
 }
 
-~XButton2 & WheelDown::
+XButton2 & WheelDown::
 {
     Send("{Alt Down}{Shift Down}{Tab}{Shift Up}")
     SetTimer(ReleaseAltTimer, 10)
@@ -94,14 +95,17 @@ ReleaseAltTimer() {
 }
 
 XButton2_pressed := false
+XButton2_pressed_only := true
 LButton::
 {
-    global XButton2_pressed
+    global XButton2_pressed, XButton2_pressed_only
     if (GetKeyState("XButton2", "P"))
     {
         Send("#t")
+        Send("#+t")
         Send("{End}")
         XButton2_pressed := true
+        XButton2_pressed_only := false
         MouseGetPos &x, &y
         Loop
         {
@@ -142,7 +146,7 @@ LButton::
 
 LButton Up::
 {
-    global XButton2_pressed
+    global XButton2_pressed, XButton2_pressed_only
     if (XButton2_pressed)
     {
         XButton2_pressed := false
@@ -150,6 +154,28 @@ LButton Up::
     else
     {
         Send("{LButton up}")
+    }
+}
+
+XButton2::
+{
+    global XButton2_pressed_only
+    if XButton2_pressed_only
+    {
+        Send("{XButton2 down}")
+    }
+}
+
+XButton2 Up::
+{
+    global XButton2_pressed_only
+    if XButton2_pressed_only
+    {
+        Send("{XButton2 up}")
+    }
+    else
+    {
+        XButton2_pressed_only := true
     }
 }
 
