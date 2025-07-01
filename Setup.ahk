@@ -2,6 +2,9 @@
 CoordMode "Mouse", "Screen"
 CoordMode "ToolTip", "Screen"
 
+^+4:: Run "C:\Users\Hello\OneDrive\Code Tutorial\Python\Auto\Pin\pin.pyw"
+^+5:: Run "C:\Users\Hello\OneDrive\Code Tutorial\Python\Auto\Trans\trans.pyw"
+
 isEdgeAction := false
 
 MButton::
