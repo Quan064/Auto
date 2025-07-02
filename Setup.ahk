@@ -74,24 +74,17 @@ ReleaseAltTimer() {
         Send("{Alt Up}")
         SetTimer(ReleaseAltTimer, 0)
     }
-    MouseGetPos &x, &y
-    if (!deleteSent)
-    {
-        if (x >= 1920 - 5)
-        {
+    if (!deleteSent) {
+        if GetKeyState("RButton", "P") {
             Send("{Delete}")
             deleteSent := true
         }
-        else if (x <= 5)
-        {
-            Send("{Escape}")
-            Send("{Alt Up}")
-            SetTimer(ReleaseAltTimer, 0)
-            deleteSent := true
+    }
+    else {
+        if !GetKeyState("RButton", "P") {
+            deleteSent := false
         }
     }
-    else if ((x < 1920 - 5) && (x > 5))
-        deleteSent := false
 }
 
 XButton2_pressed := false
@@ -101,8 +94,7 @@ LButton::
     global XButton2_pressed, XButton2_pressed_only
     if (GetKeyState("XButton2", "P"))
     {
-        Send("#t")
-        Send("#+t")
+        Send("{LWin down}t{LWin up}")
         Send("{End}")
         XButton2_pressed := true
         XButton2_pressed_only := false
