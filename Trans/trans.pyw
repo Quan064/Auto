@@ -31,6 +31,7 @@ def Setup_ChromeDriver():
     while True:
         if os.path.exists(PROCESSED_PATH): break
         sleep(0.1)
+    sleep(0.5)
     driver.close()
     driver.quit()
 
