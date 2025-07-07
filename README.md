@@ -9,6 +9,10 @@
 - Replace **Alt + Tab** with **Forward mouse button + Scroll wheel** (right click to remove)
 - Middle-click on the right edge of the screen to clear notification history
 - **Forward mouse button + Left click + Move left or right** to open another window of an app on the taskbar (right click to cancel)
+- Hold the left mouse button on the window's title bar to snap left, snap right, or maximize
+    - Snap left: click on the left third of the title bar
+    - Snap right: click on the right third of the title bar
+    - Maximize: click on the middle third of the title bar
 
 ## Light_adjust.exe
 Adjust screen brightness using hotkeys:

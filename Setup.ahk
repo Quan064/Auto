@@ -1,4 +1,5 @@
 ﻿#Requires AutoHotkey v2
+#SingleInstance Force
 CoordMode "Mouse", "Screen"
 CoordMode "ToolTip", "Screen"
 #Esc:: ExitApp
@@ -91,7 +92,7 @@ XButton2_pressed := false
 XButton2_pressed_only := true
 LButton::
 {
-    global XButton2_pressed, XButton2_pressed_only
+    global XButton2_pressed, XButton2_pressed_only, LHolding, holdStartTime
     if (GetKeyState("XButton2", "P"))
     {
         Send("{LWin down}t{LWin up}")
@@ -133,12 +134,21 @@ LButton::
     else
     {
         Send("{LButton down}")
+
+        MouseGetPos &start_x, &start_y, &hWnd
+        WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " hWnd)
+
+        if (start_x >= winX && start_x <= winX + winW && start_y >= winY && start_y <= winY + 36) {
+            LHolding := true
+            holdStartTime := A_TickCount
+            SetTimer(CheckHold, 50)
+        }
     }
 }
 
 LButton Up::
 {
-    global XButton2_pressed, XButton2_pressed_only
+    global XButton2_pressed, XButton2_pressed_only, LHolding
     if (XButton2_pressed)
     {
         XButton2_pressed := false
@@ -146,6 +156,40 @@ LButton Up::
     else
     {
         Send("{LButton up}")
+        LHolding := false
+    }
+}
+
+CheckHold()
+{
+    global LHolding, holdStartTime
+    if !LHolding
+    {
+        SetTimer(CheckHold, 0)
+        return
+    }
+
+    ; Nếu giữ đủ lâu thì snap
+    if (A_TickCount - holdStartTime >= 300)
+    {
+        SetTimer(CheckHold, 0)
+
+        MouseGetPos &start_x, &start_y, &hWnd
+        WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " hWnd)
+
+        WinMove(winX + 10, winY + 10, winW, winH, "A")
+        if start_x <= winW / 3 + winX {
+            Send("#{Left}")
+        }
+        else if start_x < winW / 3 * 2 + winX {
+            Send("#{Up}")
+        }
+        else {
+            Send("#{Right}")
+        }
+
+        ; Reset trạng thái
+        isMouseHolding := false
     }
 }
 
