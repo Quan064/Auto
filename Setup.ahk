@@ -92,7 +92,7 @@ XButton2_pressed := false
 XButton2_pressed_only := true
 LButton::
 {
-    global XButton2_pressed, XButton2_pressed_only, LHolding, holdStartTime
+    global XButton2_pressed, XButton2_pressed_only, LHolding, holdStartTime, hold_start_x, hold_start_y
     if (GetKeyState("XButton2", "P"))
     {
         Send("{LWin down}t{LWin up}")
@@ -105,6 +105,16 @@ LButton::
             Sleep(10)
             if !GetKeyState("XButton2", "P") {
                 Send('+ ')
+                Sleep 1000
+                hWnd := WinExist("A")
+                WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " hWnd)
+                WinMove(winX + 10, winY + 10, winW, winH, "A")
+                if winX + 7 < 960 {
+                    Send("#{Left}")
+                }
+                else {
+                    Send("#{Right}")
+                }
                 break
             }
             if GetKeyState("RButton", "P") {
@@ -135,10 +145,10 @@ LButton::
     {
         Send("{LButton down}")
 
-        MouseGetPos &start_x, &start_y, &hWnd
+        MouseGetPos &hold_start_x, &hold_start_y, &hWnd
         WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " hWnd)
 
-        if (start_x >= winX && start_x <= winX + winW && start_y >= winY && start_y <= winY + 36) {
+        if (hold_start_x >= winX && hold_start_x <= winX + winW && hold_start_y >= winY && hold_start_y <= winY + 36) {
             LHolding := true
             holdStartTime := A_TickCount
             SetTimer(CheckHold, 50)
@@ -162,7 +172,7 @@ LButton Up::
 
 CheckHold()
 {
-    global LHolding, holdStartTime
+    global LHolding, holdStartTime, hold_start_x, hold_start_y
     if !LHolding
     {
         SetTimer(CheckHold, 0)
@@ -172,24 +182,23 @@ CheckHold()
     ; Nếu giữ đủ lâu thì snap
     if (A_TickCount - holdStartTime >= 300)
     {
-        SetTimer(CheckHold, 0)
-
-        MouseGetPos &start_x, &start_y, &hWnd
+        MouseGetPos &end_x, &end_y, &hWnd
         WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " hWnd)
 
-        WinMove(winX + 10, winY + 10, winW, winH, "A")
-        if start_x <= winW / 3 + winX {
-            Send("#{Left}")
-        }
-        else if start_x < winW / 3 * 2 + winX {
-            Send("#{Up}")
-        }
-        else {
-            Send("#{Right}")
-        }
+        if abs(hold_start_x - end_x) < 5 && abs(hold_start_y - end_y) < 5 {
+            SetTimer(CheckHold, 0)
 
-        ; Reset trạng thái
-        isMouseHolding := false
+            WinMove(winX + 10, winY + 10, winW, winH, "A")
+            if end_x <= winW / 2 + winX {
+                Send("#{Left}")
+            }
+            else {
+                Send("#{Right}")
+            }
+
+            ; Reset trạng thái
+            isMouseHolding := false
+        }
     }
 }
 
