@@ -107,6 +107,10 @@ LButton::
                 Send('+ ')
                 Sleep 1000
                 hWnd := WinExist("A")
+                if !hWnd {
+                    Send("{LButton up}")
+                    break
+                }
                 WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " hWnd)
                 WinMove(winX + 10, winY + 10, winW, winH, "A")
                 if winX + 7 < 960 {
