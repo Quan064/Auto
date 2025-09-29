@@ -38,7 +38,8 @@ MButton::
 
         hwnd := WinExist("A")
         title := WinGetTitle(hwnd)
-        if title ~= "i)(Discord|Zalo|File Explorer)"
+        exe := WinGetProcessName(hwnd)
+        if title ~= "i)(Discord|Zalo|File Explorer)" || exe = "Notion.exe"
             WinClose hwnd
     }
 }

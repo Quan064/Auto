@@ -6,8 +6,9 @@ from PIL import ImageGrab, Image
 from playwright.sync_api import sync_playwright
 import time
 import io
+import os
 
-IMAGE_PATH = r"C:\Users\Hello\OneDrive\Code Tutorial\Python\Auto\Trans\captured_region.png"
+IMAGE_PATH = os.path.join(os.path.dirname(__file__), "captured_region.png")
 
 def Setup_Playwright(screenshot):
     with sync_playwright() as p:
