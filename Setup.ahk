@@ -123,7 +123,7 @@ LButton::
                 break
             }
             if GetKeyState("RButton", "P") {
-                Click 1450, 1079, 'L'
+                Click 1350, 1079, 'L'
                 MouseMove x, y
                 break
             }
