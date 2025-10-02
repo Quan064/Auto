@@ -16,7 +16,7 @@ MButton::
     isEdgeAction := x >= 1920 - 5
     if (isEdgeAction)
     {
-        Click 1450, 1079, 'L'
+        Click 1350, 1079, 'L'
         MouseMove x, y
         Sleep(300)
         Send("#n")
