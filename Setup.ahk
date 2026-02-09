@@ -8,15 +8,14 @@ CoordMode "ToolTip", "Screen"
 ^+5:: Run "C:\Users\Hello\OneDrive\Code Tutorial\Python\Auto\Trans\trans.pyw"
 
 isEdgeAction := false
-
 MButton::
 {
     global isEdgeAction
     MouseGetPos &x, &y, &winHwnd
-    isEdgeAction := x >= 1920 - 5
+    isEdgeAction := x >= A_ScreenWidth - 5
     if (isEdgeAction)
     {
-        Click 1350, 1079, 'L'
+        Send("#t")
         MouseMove x, y
         Sleep(300)
         Send("#n")
@@ -57,130 +56,35 @@ MButton Up::
     }
 }
 
-XButton2 & WheelUp::
-{
-    Send("{Alt Down}{Tab}")
-    SetTimer(ReleaseAltTimer, 10)
-}
-
-XButton2 & WheelDown::
-{
-    Send("{Alt Down}{Shift Down}{Tab}{Shift Up}")
-    SetTimer(ReleaseAltTimer, 10)
-}
-
-global deleteSent := false
-ReleaseAltTimer() {
-    global deleteSent   
-    if (!GetKeyState("XButton2", "P")) {
-        Send("{Alt Up}")
-        SetTimer(ReleaseAltTimer, 0)
-    }
-    if (!deleteSent) {
-        if GetKeyState("RButton", "P") {
-            Send("{Delete}")
-            deleteSent := true
-        }
-    }
-    else {
-        if !GetKeyState("RButton", "P") {
-            deleteSent := false
-        }
-    }
-}
-
-XButton2_pressed := false
-XButton2_pressed_only := true
+LHolding := false
 LButton::
 {
-    global XButton2_pressed, XButton2_pressed_only, LHolding, holdStartTime, hold_start_x, hold_start_y
-    if (GetKeyState("XButton2", "P"))
-    {
-        Send("{LWin down}t{LWin up}")
-        Send("{End}")
-        XButton2_pressed := true
-        XButton2_pressed_only := false
-        MouseGetPos &x, &y
-        Loop
-        {
-            Sleep(10)
-            if !GetKeyState("XButton2", "P") {
-                Send('+ ')
-                Sleep 1000
-                hWnd := WinExist("A")
-                if !hWnd {
-                    Send("{LButton up}")
-                    break
-                }
-                WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " hWnd)
-                WinMove(winX + 10, winY + 10, winW, winH, "A")
-                if winX + 7 < 960 {
-                    Send("#{Left}")
-                }
-                else {
-                    Send("#{Right}")
-                }
-                break
-            }
-            if GetKeyState("RButton", "P") {
-                Click 1350, 1079, 'L'
-                MouseMove x, y
-                break
-            }
+    global LHolding, holdStartTime, hold_start_x, hold_start_y
+    Send("{LButton down}")
 
-            MouseGetPos &xNow
-            deltaX := xNow - x
+    MouseGetPos &hold_start_x, &hold_start_y, &hWnd
+    WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " hWnd)
 
-            if Abs(deltaX) > 20
-            {
-                if deltaX > 0
-                {
-                    x := x + 20
-                    Send("#t")
-                }
-                else
-                {
-                    x := x - 20
-                    Send("#+t")
-                }
-            }
-        }
-    }
-    else
-    {
-        Send("{LButton down}")
-
-        MouseGetPos &hold_start_x, &hold_start_y, &hWnd
-        WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " hWnd)
-
-        if (hold_start_x >= winX && hold_start_x <= winX + winW && hold_start_y >= winY && hold_start_y <= winY + 36) {
-            LHolding := true
-            holdStartTime := A_TickCount
-            SetTimer(CheckHold, 50)
-        }
+    if (hold_start_x > winX && hold_start_x < winX + winW && hold_start_y > winY && hold_start_y < winY + 36) {
+        LHolding := true
+        holdStartTime := A_TickCount
+        SetTimer(CheckHold_Snap, 50)
     }
 }
 
 LButton Up::
 {
-    global XButton2_pressed, XButton2_pressed_only, LHolding
-    if (XButton2_pressed)
-    {
-        XButton2_pressed := false
-    }
-    else
-    {
-        Send("{LButton up}")
-        LHolding := false
-    }
+    global LHolding
+    Send("{LButton up}")
+    LHolding := false
 }
 
-CheckHold()
+CheckHold_Snap()
 {
     global LHolding, holdStartTime, hold_start_x, hold_start_y
     if !LHolding
     {
-        SetTimer(CheckHold, 0)
+        SetTimer(CheckHold_Snap, 0)
         return
     }
 
@@ -191,7 +95,7 @@ CheckHold()
         WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " hWnd)
 
         if abs(hold_start_x - end_x) < 5 && abs(hold_start_y - end_y) < 5 {
-            SetTimer(CheckHold, 0)
+            SetTimer(CheckHold_Snap, 0)
 
             WinMove(winX + 10, winY + 10, winW, winH, "A")
             if end_x <= winW / 2 + winX {
@@ -204,45 +108,5 @@ CheckHold()
             ; Reset trạng thái
             isMouseHolding := false
         }
-    }
-}
-
-XButton2::
-{
-    global XButton2_pressed_only
-    if XButton2_pressed_only
-    {
-        Send("{XButton2 down}")
-    }
-}
-
-XButton2 Up::
-{
-    global XButton2_pressed_only
-    if XButton2_pressed_only
-    {
-        Send("{XButton2 up}")
-    }
-    else
-    {
-        XButton2_pressed_only := true
-    }
-}
-
-RButton::
-{
-    global XButton2_pressed
-    if !XButton2_pressed
-    {
-        Send("{RButton down}")
-    }
-}
-
-RButton Up::
-{
-    global XButton2_pressed
-    if !XButton2_pressed
-    {
-        Send("{RButton up}")
     }
 }
