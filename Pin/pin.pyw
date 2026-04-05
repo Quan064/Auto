@@ -108,7 +108,11 @@ class ScreenCaptureApp(QMainWindow):
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    main_window = ScreenCaptureApp()
-    main_window.show()
-    sys.exit(app.exec())
+    try:
+        app = QApplication(sys.argv)
+        main_window = ScreenCaptureApp()
+        main_window.show()
+        sys.exit(app.exec())
+    except Exception as e:
+        import traceback
+        traceback.print_exc()

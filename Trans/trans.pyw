@@ -10,7 +10,7 @@ import os
 
 IMAGE_PATH = os.path.join(os.path.dirname(__file__), "captured_region.png")
 
-def Setup_Playwright(screenshot):
+def Setup_Playwright(screenshot: Image.Image):
     with sync_playwright() as p:
         browser = p.chromium.launch(
             headless=True,
@@ -35,7 +35,7 @@ def Setup_Playwright(screenshot):
 
         screenshot = screenshot.convert("RGB")
         buffer = io.BytesIO()
-        screenshot.save(buffer, format="JPEG", quality=30, optimize=True, icc_profile=screenshot.info.get('icc_profile'))
+        screenshot.save(buffer, format="JPEG", optimize=True, icc_profile=screenshot.info.get('icc_profile'))
         buffer.seek(0)
 
         # Upload ảnh
